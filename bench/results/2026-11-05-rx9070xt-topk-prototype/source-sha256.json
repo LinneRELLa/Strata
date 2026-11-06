@@ -1,0 +1,11 @@
+{
+  "CMakeLists.txt": "75e3dc69e6a55e463d243699351a81e6caea375888acfe653071dc5cc36b17f5",
+  "include/strata/core/mtp.hpp": "404430d52db84f06eaadae20a8ff0c5280794c40d225a0f607007a7cfb7d5f95",
+  "include/strata/core/verify.hpp": "973d7aeed225788c709711884b248cff4a81ea4f5895615a9a35bf88f0ceb758",
+  "src/core/mtp.cpp": "dfca60c213a798fff7a57e03642c7c032587ea5e1e73b475235f99fcdeaa07f4",
+  "src/core/verify.cpp": "b6b5736e7633d24d4e11e29252fa43baaa10b36c9f9feafb04b718367a611625",
+  "src/kernels/cuda/router_top10.cu": "ee52893f34b7c06fb2f691d03d66bed567bca89c6ee17167a4f0c530fce2993e",
+  "src/prefill/prefill.cpp": "05c39797757881bbc2164f18cf4642274dd5f3e90d4e063bb37abc62d30551b6",
+  "src/program/generate.cpp": "46b6e8f5011244d81f592183cb471fac1194ceea402fd4a2e522a888fc1350bb",
+  "tests/hip/topk_reference.cpp": "bfec3a5c72200de059addeb80ab0076f7ab5191f8d8d2a4c4489f336b6ce6e34"
+}

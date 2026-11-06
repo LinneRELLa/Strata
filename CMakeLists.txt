@@ -2792,3 +2792,14 @@ if(STRATA_BUILD_DSV41 AND NOT STRATA_ENABLE_CUDA AND NOT STRATA_ENABLE_HIP AND N
     target_compile_definitions(ds4_gg_bench PRIVATE STRATA_DSV41_TQ_CPU=1)
   endif()
 endif()
+
+# Local Top-k/reference-set experiment; not installed into the daily engine.
+option(STRATA_LOCAL_HOT_BUILD "Name the local hot-switch experiment separately" OFF)
+if(STRATA_LOCAL_HOT_BUILD)
+  set_target_properties(strata PROPERTIES OUTPUT_NAME strata-hot)
+endif()
+if(STRATA_ENABLE_HIP AND STRATA_BUILD_TESTS)
+  add_executable(topk_reference tests/hip/topk_reference.cpp)
+  target_include_directories(topk_reference PRIVATE ${_strata_gpu_include_directories})
+  target_link_libraries(topk_reference PRIVATE strata_kernels ${_strata_gpu_runtime_target})
+endif()

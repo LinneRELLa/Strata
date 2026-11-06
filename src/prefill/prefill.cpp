@@ -1547,7 +1547,13 @@ bool Prefill::init(const core::WeightTable& wt, const core::ModelGeometry& g, co
 #endif
     m.wt = &wt; m.g = &g; m.ss = &ss; m.src = src; m.cache = cache; m.host_res = host_res;
     m.T = chunk; m.cs = (cudaStream_t) stream; m.stats = &stats_;
-    if (g.n_embd != N || g.hc != HC || g.hc_lr != LR || g.n_expert < 1 || ss.k != K) {
+    // Decode-only local experiment: this path owns its T*10 route buffers and
+    // deliberately keeps the original ten-expert prompt computation. Session
+    // decode/verify buffers have the reduced width and are not used for routing
+    // here. Do not change this path's fixed-stride kernels to the session width.
+    const bool experiment_decode_k = std::getenv("STRATA_EXPERIMENT_TOPK") != nullptr &&
+        g.n_expert == 512 && (ss.k == 5 || ss.k == 6 || ss.k == 8);
+    if (g.n_embd != N || g.hc != HC || g.hc_lr != LR || g.n_expert < 1 || (ss.k != K && !experiment_decode_k)) {
         err = "prefill: geometry differs from the artifact's"; return false;
     }
     {   // a native pack's experts: this path's expert buffers and products (and so their Hadamard rotations) are

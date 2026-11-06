@@ -100,6 +100,9 @@ public:
     /// `max_t` <= kVerifyMaxT.  `head` may be null (the canonical head is then run per token).
     bool init(const WeightTable& wt, const ModelGeometry& g, SessionState& ss, const VerifyHits& hits,
               const NativeHead* head, int max_t, std::string& err);
+    /// Local solo-serve mode: drop width-dependent graphs, retaining weights and
+    /// buffers allocated at Top-10 capacity. Caller has drained every request.
+    bool reset_expert_width(int k, std::string& err);
 
     /// One window: `tokens[0..T)` at positions pos0.., the pool served per layer; `out[t]` = argmax after token t.
     /// The PLE rows are gathered here from `ss.ple_prev` and the tokens.  Captures the T-token graph on first use.
@@ -604,6 +607,7 @@ private:
     // [sel_long_][T]: 1 is the long-context QSA select (STRATA_SELECT_LONG=1: multi-CTA top-k, shuffle-free decode
     // scores; see run()); without it only [0] is ever captured
     // (per window size T = 1..kWindowMaxT: a solo window is at most 8 rows, but a merge window of a wide batch is not)
+    int expert_capacity_ = 0;
     cudaGraphExec_t exec_[2][strata::kernels::kWindowMaxT + 1] = {};
     cudaGraphExec_t exec_nr_[2][strata::kernels::kWindowMaxT + 1] = {};   // #871: the doorbell variant of a stage that is all-resident otherwise
     bool launched_[2][strata::kernels::kWindowMaxT + 1] = {}, launched_nr_[2][strata::kernels::kWindowMaxT + 1] = {};   ///< this graph has been launched once (early_ple_flag: a cold first launch raises the PLE flag first)

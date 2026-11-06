@@ -44,6 +44,12 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 #include "strata/platform/cpu_relax.hpp"
 
 #ifdef STRATA_NATIVE_EXPERTS
@@ -138,6 +144,24 @@ bool read_file(const std::string& path, std::vector<uint8_t>& out) {
 }
 
 }  // namespace
+
+bool MtpDrafter::reset_expert_width(std::string& err) {
+    if (!ss_ || !g_ || !idle(err)) return false;
+    const OnDevice on_device(device_);
+    if (cudaDeviceSynchronize() != cudaSuccess) {
+        err = "hot topk: draft synchronization failed"; return false;
+    }
+    for (auto* table : {&prefill_exec_, &prefill_dev_exec_, &round_exec_, &step_exec_, &round_exec_c_, &step_exec_c_})
+        for (auto& graph : *table) {
+            if (graph) cudaGraphExecDestroy(graph);
+            graph = nullptr;
+        }
+    qsa_state_zero(st_, *g_, cs_);
+    set_cell_floor(0);
+    prompt_len_ = 0;
+    chain_rule_ = {};
+    return cudaStreamSynchronize(cs_) == cudaSuccess;
+}
 
 MtpDrafter::~MtpDrafter() {
     if (cs_) cudaStreamSynchronize(cs_);
@@ -888,7 +912,16 @@ void mtp_list_nodes(cudaGraph_t graph, const char* what) {
         if (ty == hipGraphNodeTypeKernel) {
             hipKernelNodeParams kp{};
             if (hipGraphKernelNodeGetParams(nd, &kp) == hipSuccess && kp.func != nullptr) {
+#if defined(_WIN32)
+                // Match verify.cpp: older Windows import libraries omit this
+                // optional graph-diagnostics symbol. Arithmetic does not use it.
+                using KernelName = const char* (*)(const void*, hipStream_t);
+                static auto kernel_name = reinterpret_cast<KernelName>(
+                    GetProcAddress(GetModuleHandleA("amdhip64_7.dll"), "hipKernelNameRefByPtr"));
+                const char* fn = kernel_name ? kernel_name(kp.func, nullptr) : nullptr;
+#else
                 const char* fn = hipKernelNameRefByPtr(kp.func, nullptr);
+#endif
                 if (fn != nullptr) name = fn;
             }
         }

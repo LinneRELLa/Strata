@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-06T09:34:26.885633+08:00",
+  "binary": "existing measured build; not rebuilt from this worktree",
+  "cases": [
+    {
+      "command": [
+        "topk_reference",
+        "10",
+        "10"
+      ],
+      "environment": {
+        "STRATA_EXPERIMENT_TOPK": "10",
+        "STRATA_TOPK_REFERENCE": "10"
+      },
+      "returncode": 0,
+      "stdout": "topk_reference K=10 reference=10 rows=129 max_abs_error=0 failures=0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "topk_reference",
+        "6",
+        "10"
+      ],
+      "environment": {
+        "STRATA_EXPERIMENT_TOPK": "10",
+        "STRATA_TOPK_REFERENCE": "10"
+      },
+      "returncode": 0,
+      "stdout": "topk_reference K=6 reference=10 rows=129 max_abs_error=0 failures=0\n",
+      "stderr": ""
+    }
+  ]
+}

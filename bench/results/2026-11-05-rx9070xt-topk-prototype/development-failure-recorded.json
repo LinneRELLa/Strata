@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "error": "400 Client Error: Bad Request for url: http://127.0.0.1:18196/v1/chat/completions",
+  "completed_rounds": 2,
+  "diagnosis": "active K used for allocated plan-field offsets; corrected to sink_.cap before the successful run"
+}

@@ -777,6 +777,31 @@ bool Verifier::set_logit_bias(const std::vector<float>& bias, std::string& err) 
     return true;
 }
 
+bool Verifier::reset_expert_width(int k, std::string& err) {
+    if (!ss_ || expert_capacity_ != 10 || (k != 6 && k != 10) ||
+        next_ || !exec_bm_.empty() || prelaunched_ || released_.load()) {
+        err = "hot topk: verifier requires idle solo Top-10-capacity buffers";
+        return false;
+    }
+    const OnDevice on_device(device_);
+    if (cudaDeviceSynchronize() != cudaSuccess) {
+        err = "hot topk: verifier synchronization failed"; return false;
+    }
+    for (auto* table : {&exec_, &exec_nr_})
+        for (auto& row : *table)
+            for (auto& graph : row) {
+                if (graph) cudaGraphExecDestroy(graph);
+                graph = nullptr;
+            }
+    for (auto* table : {&launched_, &launched_nr_})
+        for (auto& row : *table)
+            for (auto& launched : row) launched = false;
+    if (commit_exec_) cudaGraphExecDestroy(commit_exec_);
+    commit_exec_ = nullptr;
+    ss_->k = k;
+    return true;
+}
+
 bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState& ss, const VerifyHits& hits,
                     const NativeHead* head, int max_t, std::string& err) {
     g_diag_verifier.store(this);
@@ -793,6 +818,7 @@ bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState&
     wt_ = &wt;
     g_ = &g;
     ss_ = &ss;
+    expert_capacity_ = (int) ss.k;
     hits_ = hits;
     head_ = head;
     max_t_ = max_t;
@@ -819,7 +845,9 @@ bool Verifier::init(const WeightTable& wt, const ModelGeometry& g, SessionState&
         err = "verify: " + why + " (the verify window reproduces the default native decode path)";
         return false;
     }
-    if (!strata::kernels::fused_gr_supported(g.n_embd, g.hc, g.hc_lr) || ss.k != 10 || g.ssm_state_size != 128 ||
+    const bool experiment_k = std::getenv("STRATA_EXPERIMENT_TOPK") != nullptr &&
+        (ss.k == 5 || ss.k == 6 || ss.k == 8) && g.n_expert == 512;
+    if (!strata::kernels::fused_gr_supported(g.n_embd, g.hc, g.hc_lr) || (ss.k != 10 && !experiment_k) || g.ssm_state_size != 128 ||
         g.ssm_d_conv != 4) {
         err = "verify: geometry differs from the artifact's";
         return false;
@@ -2106,12 +2134,12 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
         if (ar_on()) {
             resident_plan(ids_ + tb * K, n * (int) K, (int) K, hits_.d_res + l * g.n_expert, (int) g.n_expert,
                           hits_.cache_base, slot_off_d_, (long long) hits_.blob,
-                          plan_ + (size_t) grp * (size_t) (plan_i32_ + 16), (long long) max_t_ * K, nullptr, 0, cs, m_plan_err_);
+                          plan_ + (size_t) grp * (size_t) (plan_i32_ + 16), (long long) sink_.cap, nullptr, 0, cs, m_plan_err_);
         } else {
             if (device_plan_)   // E-6: every routed expert resident: this group's plan without the host
                 resident_plan(ids_ + tb * K, n * (int) K, (int) K, hits_.d_res + l * g.n_expert, (int) g.n_expert,
                               hits_.cache_base, slot_off_d_, (long long) hits_.blob,
-                              plan_ + (size_t) grp * (size_t) (plan_i32_ + 16), (long long) max_t_ * K, skip_ + grp,
+                              plan_ + (size_t) grp * (size_t) (plan_i32_ + 16), (long long) sink_.cap, skip_ + grp,
                               (uint32_t) ((l - lb_) * G + grp + 1), cs);
 #if defined(STRATA_USE_HIP)
             if (g_doorbell_store)   // #649 A/B: the step's ring stored, not incremented over PCIe
@@ -2201,7 +2229,9 @@ bool Verifier::record_window(int T, cudaStream_t cs, std::string& err) {
     auto post = [&](int64_t l, int grp) -> bool {
         const int tb = tb_[grp], te = te_[grp], n = te - tb;
         const uint32_t ring = (uint32_t) ((l - lb_) * G + grp + 1);
-        const int64_t cap = (int64_t) n * K, capx = (int64_t) max_t_ * K;
+        // The plan's capacity/field offsets belong to its allocation, while
+        // active expert rows use K. Hot switching retains a Top-10 plan arena.
+        const int64_t cap = (int64_t) n * K, capx = sink_.cap;
         int32_t* pl = plan_ + (size_t) grp * (size_t) (plan_i32_ + 16);
         const int32_t* p_counts = pl;
         const int32_t* p_start = pl + 4;

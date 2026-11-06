@@ -1,0 +1,50 @@
+[
+  {
+    "test": "hip_router_fast",
+    "returncode": 0,
+    "stdout": "PASS 512 experts, k 10, 65536 rows: fast kernel vs the portable kernel: 0 rows differ\nPASS 512 experts, k 10, 65536 rows: fast kernel, serial path vs the portable kernel: 0 rows differ\n  portable: 26.76 us per single-token call\n  fast: 7.05 us per single-token call\nPASS 256 experts, k 8, 8192 rows: fast kernel vs the portable kernel: 0 rows differ\nPASS 256 experts, k 8, 8192 rows: fast kernel, serial path vs the portable kernel: 0 rows differ\n  portable: 13.93 us per single-token call\n  fast: 5.29 us per single-token call\nFAILURES: 0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k10-ref10",
+    "returncode": 0,
+    "stdout": "topk_reference K=10 reference=10 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k8-ref8",
+    "returncode": 0,
+    "stdout": "topk_reference K=8 reference=8 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k8-ref10",
+    "returncode": 0,
+    "stdout": "topk_reference K=8 reference=10 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k6-ref6",
+    "returncode": 0,
+    "stdout": "topk_reference K=6 reference=6 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k6-ref10",
+    "returncode": 0,
+    "stdout": "topk_reference K=6 reference=10 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k5-ref5",
+    "returncode": 0,
+    "stdout": "topk_reference K=5 reference=5 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  },
+  {
+    "test": "k5-ref10",
+    "returncode": 0,
+    "stdout": "topk_reference K=5 reference=10 rows=129 max_abs_error=0 failures=0\n",
+    "stderr": ""
+  }
+]

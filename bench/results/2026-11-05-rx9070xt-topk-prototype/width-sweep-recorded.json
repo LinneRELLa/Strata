@@ -1,0 +1,1194 @@
+{
+  "date": "2026-11-05T15:19:19.566400+08:00",
+  "scope": "Full Top-10 prompt prefill; reduced-K decode, verifier, and MTP expert execution.",
+  "arms": [
+    {
+      "label": "k10-ref10",
+      "k": 10,
+      "reference": 10,
+      "complete": true,
+      "quality": [
+        {
+          "name": "multiply",
+          "passed": true
+        },
+        {
+          "name": "remainder",
+          "passed": false
+        },
+        {
+          "name": "logic",
+          "passed": false
+        },
+        {
+          "name": "fraction",
+          "passed": false
+        },
+        {
+          "name": "dedup",
+          "passed": true
+        },
+        {
+          "name": "intervals",
+          "passed": true
+        },
+        {
+          "name": "balanced",
+          "passed": true
+        },
+        {
+          "name": "runs",
+          "passed": true
+        },
+        {
+          "name": "tool_0",
+          "passed": true
+        },
+        {
+          "name": "tool_1",
+          "passed": true
+        },
+        {
+          "name": "chinese_json",
+          "passed": true
+        },
+        {
+          "name": "context_recall",
+          "passed": true
+        }
+      ],
+      "speed": [
+        {
+          "workload": "code",
+          "repeat": 0,
+          "elapsed_s": 19.48400000000038,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 63,
+            "prompt_ms": 3612.0,
+            "prompt_per_token_ms": 57.333,
+            "prompt_per_second": 17.4,
+            "predicted_n": 384,
+            "predicted_ms": 15867.1,
+            "predicted_per_token_ms": 41.321,
+            "predicted_per_second": 24.2,
+            "draft_n": 274,
+            "draft_n_accepted": 231
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 15867.1,
+            "decode_tok_s": 24.2,
+            "drafts_offered": 274,
+            "drafts_accepted": 231,
+            "hit_rate": 0.553,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "code",
+          "repeat": 1,
+          "elapsed_s": 16.53099999999904,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 56
+            }
+          },
+          "timings": {
+            "cache_n": 56,
+            "prompt_n": 7,
+            "prompt_ms": 520.7,
+            "prompt_per_token_ms": 74.386,
+            "prompt_per_second": 13.4,
+            "predicted_n": 384,
+            "predicted_ms": 16002.7,
+            "predicted_per_token_ms": 41.674,
+            "predicted_per_second": 24.0,
+            "draft_n": 284,
+            "draft_n_accepted": 222
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 16002.7,
+            "decode_tok_s": 24.0,
+            "drafts_offered": 284,
+            "drafts_accepted": 222,
+            "hit_rate": 0.613,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 0,
+          "elapsed_s": 22.860000000000582,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 62,
+            "prompt_ms": 5511.4,
+            "prompt_per_token_ms": 88.894,
+            "prompt_per_second": 11.2,
+            "predicted_n": 384,
+            "predicted_ms": 17331.2,
+            "predicted_per_token_ms": 45.133,
+            "predicted_per_second": 22.2,
+            "draft_n": 226,
+            "draft_n_accepted": 158
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 17331.2,
+            "decode_tok_s": 22.2,
+            "drafts_offered": 226,
+            "drafts_accepted": 158,
+            "hit_rate": 0.624,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 1,
+          "elapsed_s": 14.421999999998661,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 55
+            }
+          },
+          "timings": {
+            "cache_n": 55,
+            "prompt_n": 7,
+            "prompt_ms": 573.0,
+            "prompt_per_token_ms": 81.857,
+            "prompt_per_second": 12.2,
+            "predicted_n": 384,
+            "predicted_ms": 13838.5,
+            "predicted_per_token_ms": 36.038,
+            "predicted_per_second": 27.7,
+            "draft_n": 238,
+            "draft_n_accepted": 167
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 13838.5,
+            "decode_tok_s": 27.7,
+            "drafts_offered": 238,
+            "drafts_accepted": 167,
+            "hit_rate": 0.683,
+            "pcie_share": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "label": "k8-ref10",
+      "k": 8,
+      "reference": 10,
+      "complete": true,
+      "quality": [
+        {
+          "name": "multiply",
+          "passed": true
+        },
+        {
+          "name": "remainder",
+          "passed": false
+        },
+        {
+          "name": "logic",
+          "passed": false
+        },
+        {
+          "name": "fraction",
+          "passed": false
+        },
+        {
+          "name": "dedup",
+          "passed": true
+        },
+        {
+          "name": "intervals",
+          "passed": true
+        },
+        {
+          "name": "balanced",
+          "passed": true
+        },
+        {
+          "name": "runs",
+          "passed": true
+        },
+        {
+          "name": "tool_0",
+          "passed": true
+        },
+        {
+          "name": "tool_1",
+          "passed": true
+        },
+        {
+          "name": "chinese_json",
+          "passed": true
+        },
+        {
+          "name": "context_recall",
+          "passed": true
+        }
+      ],
+      "speed": [
+        {
+          "workload": "code",
+          "repeat": 0,
+          "elapsed_s": 15.921999999998661,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 63,
+            "prompt_ms": 1999.9,
+            "prompt_per_token_ms": 31.744,
+            "prompt_per_second": 31.5,
+            "predicted_n": 384,
+            "predicted_ms": 13930.0,
+            "predicted_per_token_ms": 36.276,
+            "predicted_per_second": 27.6,
+            "draft_n": 206,
+            "draft_n_accepted": 183
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 13930.0,
+            "decode_tok_s": 27.6,
+            "drafts_offered": 206,
+            "drafts_accepted": 183,
+            "hit_rate": 0.584,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "code",
+          "repeat": 1,
+          "elapsed_s": 12.125,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 56
+            }
+          },
+          "timings": {
+            "cache_n": 56,
+            "prompt_n": 7,
+            "prompt_ms": 328.2,
+            "prompt_per_token_ms": 46.886,
+            "prompt_per_second": 21.3,
+            "predicted_n": 384,
+            "predicted_ms": 11791.9,
+            "predicted_per_token_ms": 30.708,
+            "predicted_per_second": 32.6,
+            "draft_n": 289,
+            "draft_n_accepted": 244
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 11791.9,
+            "decode_tok_s": 32.6,
+            "drafts_offered": 289,
+            "drafts_accepted": 244,
+            "hit_rate": 0.628,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 0,
+          "elapsed_s": 18.48400000000038,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 62,
+            "prompt_ms": 4790.5,
+            "prompt_per_token_ms": 77.266,
+            "prompt_per_second": 12.9,
+            "predicted_n": 384,
+            "predicted_ms": 13677.4,
+            "predicted_per_token_ms": 35.618,
+            "predicted_per_second": 28.1,
+            "draft_n": 222,
+            "draft_n_accepted": 152
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 13677.4,
+            "decode_tok_s": 28.1,
+            "drafts_offered": 222,
+            "drafts_accepted": 152,
+            "hit_rate": 0.632,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 1,
+          "elapsed_s": 12.453000000001339,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 55
+            }
+          },
+          "timings": {
+            "cache_n": 55,
+            "prompt_n": 7,
+            "prompt_ms": 347.7,
+            "prompt_per_token_ms": 49.671,
+            "prompt_per_second": 20.1,
+            "predicted_n": 384,
+            "predicted_ms": 12099.8,
+            "predicted_per_token_ms": 31.51,
+            "predicted_per_second": 31.7,
+            "draft_n": 187,
+            "draft_n_accepted": 149
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 12099.8,
+            "decode_tok_s": 31.7,
+            "drafts_offered": 187,
+            "drafts_accepted": 149,
+            "hit_rate": 0.705,
+            "pcie_share": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "label": "k8-ref8",
+      "k": 8,
+      "reference": 8,
+      "complete": true,
+      "quality": [
+        {
+          "name": "multiply",
+          "passed": true
+        },
+        {
+          "name": "remainder",
+          "passed": false
+        },
+        {
+          "name": "logic",
+          "passed": false
+        },
+        {
+          "name": "fraction",
+          "passed": false
+        },
+        {
+          "name": "dedup",
+          "passed": true
+        },
+        {
+          "name": "intervals",
+          "passed": true
+        },
+        {
+          "name": "balanced",
+          "passed": true
+        },
+        {
+          "name": "runs",
+          "passed": true
+        },
+        {
+          "name": "tool_0",
+          "passed": true
+        },
+        {
+          "name": "tool_1",
+          "passed": true
+        },
+        {
+          "name": "chinese_json",
+          "passed": true
+        },
+        {
+          "name": "context_recall",
+          "passed": true
+        }
+      ],
+      "speed": [
+        {
+          "workload": "code",
+          "repeat": 0,
+          "elapsed_s": 15.343000000000757,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 63,
+            "prompt_ms": 2380.4,
+            "prompt_per_token_ms": 37.784,
+            "prompt_per_second": 26.5,
+            "predicted_n": 384,
+            "predicted_ms": 12957.9,
+            "predicted_per_token_ms": 33.745,
+            "predicted_per_second": 29.6,
+            "draft_n": 254,
+            "draft_n_accepted": 223
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 12957.9,
+            "decode_tok_s": 29.6,
+            "drafts_offered": 254,
+            "drafts_accepted": 223,
+            "hit_rate": 0.585,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "code",
+          "repeat": 1,
+          "elapsed_s": 13.296999999998661,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 56
+            }
+          },
+          "timings": {
+            "cache_n": 56,
+            "prompt_n": 7,
+            "prompt_ms": 400.5,
+            "prompt_per_token_ms": 57.214,
+            "prompt_per_second": 17.5,
+            "predicted_n": 384,
+            "predicted_ms": 12901.3,
+            "predicted_per_token_ms": 33.597,
+            "predicted_per_second": 29.8,
+            "draft_n": 274,
+            "draft_n_accepted": 226
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 12901.3,
+            "decode_tok_s": 29.8,
+            "drafts_offered": 274,
+            "drafts_accepted": 226,
+            "hit_rate": 0.619,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 0,
+          "elapsed_s": 17.64100000000326,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 62,
+            "prompt_ms": 3533.6,
+            "prompt_per_token_ms": 56.994,
+            "prompt_per_second": 17.5,
+            "predicted_n": 384,
+            "predicted_ms": 14104.9,
+            "predicted_per_token_ms": 36.732,
+            "predicted_per_second": 27.2,
+            "draft_n": 219,
+            "draft_n_accepted": 150
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 14104.9,
+            "decode_tok_s": 27.2,
+            "drafts_offered": 219,
+            "drafts_accepted": 150,
+            "hit_rate": 0.639,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 1,
+          "elapsed_s": 12.967999999997119,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 55
+            }
+          },
+          "timings": {
+            "cache_n": 55,
+            "prompt_n": 7,
+            "prompt_ms": 370.5,
+            "prompt_per_token_ms": 52.929,
+            "prompt_per_second": 18.9,
+            "predicted_n": 384,
+            "predicted_ms": 12590.4,
+            "predicted_per_token_ms": 32.788,
+            "predicted_per_second": 30.5,
+            "draft_n": 227,
+            "draft_n_accepted": 155
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 12590.4,
+            "decode_tok_s": 30.5,
+            "drafts_offered": 227,
+            "drafts_accepted": 155,
+            "hit_rate": 0.712,
+            "pcie_share": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "label": "k6-ref10",
+      "k": 6,
+      "reference": 10,
+      "complete": true,
+      "quality": [
+        {
+          "name": "multiply",
+          "passed": true
+        },
+        {
+          "name": "remainder",
+          "passed": false
+        },
+        {
+          "name": "logic",
+          "passed": false
+        },
+        {
+          "name": "fraction",
+          "passed": false
+        },
+        {
+          "name": "dedup",
+          "passed": true
+        },
+        {
+          "name": "intervals",
+          "passed": true
+        },
+        {
+          "name": "balanced",
+          "passed": true
+        },
+        {
+          "name": "runs",
+          "passed": true
+        },
+        {
+          "name": "tool_0",
+          "passed": true
+        },
+        {
+          "name": "tool_1",
+          "passed": true
+        },
+        {
+          "name": "chinese_json",
+          "passed": true
+        },
+        {
+          "name": "context_recall",
+          "passed": true
+        }
+      ],
+      "speed": [
+        {
+          "workload": "code",
+          "repeat": 0,
+          "elapsed_s": 12.437999999998283,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 63,
+            "prompt_ms": 1474.2,
+            "prompt_per_token_ms": 23.4,
+            "prompt_per_second": 42.7,
+            "predicted_n": 384,
+            "predicted_ms": 10946.8,
+            "predicted_per_token_ms": 28.507,
+            "predicted_per_second": 35.1,
+            "draft_n": 300,
+            "draft_n_accepted": 241
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10946.8,
+            "decode_tok_s": 35.1,
+            "drafts_offered": 300,
+            "drafts_accepted": 241,
+            "hit_rate": 0.589,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "code",
+          "repeat": 1,
+          "elapsed_s": 10.1720000000023,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 56
+            }
+          },
+          "timings": {
+            "cache_n": 56,
+            "prompt_n": 7,
+            "prompt_ms": 234.7,
+            "prompt_per_token_ms": 33.529,
+            "prompt_per_second": 29.8,
+            "predicted_n": 384,
+            "predicted_ms": 9928.6,
+            "predicted_per_token_ms": 25.856,
+            "predicted_per_second": 38.7,
+            "draft_n": 285,
+            "draft_n_accepted": 233
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 9928.6,
+            "decode_tok_s": 38.7,
+            "drafts_offered": 285,
+            "drafts_accepted": 233,
+            "hit_rate": 0.655,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 0,
+          "elapsed_s": 12.515999999999622,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 62,
+            "prompt_ms": 1853.1,
+            "prompt_per_token_ms": 29.889,
+            "prompt_per_second": 33.5,
+            "predicted_n": 384,
+            "predicted_ms": 10662.3,
+            "predicted_per_token_ms": 27.766,
+            "predicted_per_second": 36.0,
+            "draft_n": 266,
+            "draft_n_accepted": 178
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10662.3,
+            "decode_tok_s": 36.0,
+            "drafts_offered": 266,
+            "drafts_accepted": 178,
+            "hit_rate": 0.644,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 1,
+          "elapsed_s": 10.514999999999418,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 55
+            }
+          },
+          "timings": {
+            "cache_n": 55,
+            "prompt_n": 7,
+            "prompt_ms": 206.4,
+            "prompt_per_token_ms": 29.486,
+            "prompt_per_second": 33.9,
+            "predicted_n": 384,
+            "predicted_ms": 10307.3,
+            "predicted_per_token_ms": 26.842,
+            "predicted_per_second": 37.3,
+            "draft_n": 304,
+            "draft_n_accepted": 186
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10307.3,
+            "decode_tok_s": 37.3,
+            "drafts_offered": 304,
+            "drafts_accepted": 186,
+            "hit_rate": 0.73,
+            "pcie_share": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "label": "k6-ref6",
+      "k": 6,
+      "reference": 6,
+      "complete": true,
+      "quality": [
+        {
+          "name": "multiply",
+          "passed": true
+        },
+        {
+          "name": "remainder",
+          "passed": false
+        },
+        {
+          "name": "logic",
+          "passed": false
+        },
+        {
+          "name": "fraction",
+          "passed": false
+        },
+        {
+          "name": "dedup",
+          "passed": true
+        },
+        {
+          "name": "intervals",
+          "passed": false
+        },
+        {
+          "name": "balanced",
+          "passed": true
+        },
+        {
+          "name": "runs",
+          "passed": true
+        },
+        {
+          "name": "tool_0",
+          "passed": true
+        },
+        {
+          "name": "tool_1",
+          "passed": true
+        },
+        {
+          "name": "chinese_json",
+          "passed": true
+        },
+        {
+          "name": "context_recall",
+          "passed": true
+        }
+      ],
+      "speed": [
+        {
+          "workload": "code",
+          "repeat": 0,
+          "elapsed_s": 12.235000000000582,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 63,
+            "prompt_ms": 1469.0,
+            "prompt_per_token_ms": 23.317,
+            "prompt_per_second": 42.9,
+            "predicted_n": 384,
+            "predicted_ms": 10771.2,
+            "predicted_per_token_ms": 28.05,
+            "predicted_per_second": 35.7,
+            "draft_n": 286,
+            "draft_n_accepted": 228
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10771.2,
+            "decode_tok_s": 35.7,
+            "drafts_offered": 286,
+            "drafts_accepted": 228,
+            "hit_rate": 0.592,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "code",
+          "repeat": 1,
+          "elapsed_s": 10.25,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 56
+            }
+          },
+          "timings": {
+            "cache_n": 56,
+            "prompt_n": 7,
+            "prompt_ms": 194.0,
+            "prompt_per_token_ms": 27.714,
+            "prompt_per_second": 36.1,
+            "predicted_n": 384,
+            "predicted_ms": 10042.5,
+            "predicted_per_token_ms": 26.152,
+            "predicted_per_second": 38.2,
+            "draft_n": 267,
+            "draft_n_accepted": 224
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10042.5,
+            "decode_tok_s": 38.2,
+            "drafts_offered": 267,
+            "drafts_accepted": 224,
+            "hit_rate": 0.656,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 0,
+          "elapsed_s": 12.59400000000096,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 62,
+            "prompt_ms": 1692.7,
+            "prompt_per_token_ms": 27.302,
+            "prompt_per_second": 36.6,
+            "predicted_n": 384,
+            "predicted_ms": 10893.5,
+            "predicted_per_token_ms": 28.368,
+            "predicted_per_second": 35.3,
+            "draft_n": 267,
+            "draft_n_accepted": 184
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10893.5,
+            "decode_tok_s": 35.3,
+            "drafts_offered": 267,
+            "drafts_accepted": 184,
+            "hit_rate": 0.639,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 1,
+          "elapsed_s": 10.40599999999904,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 55
+            }
+          },
+          "timings": {
+            "cache_n": 55,
+            "prompt_n": 7,
+            "prompt_ms": 177.5,
+            "prompt_per_token_ms": 25.357,
+            "prompt_per_second": 39.4,
+            "predicted_n": 384,
+            "predicted_ms": 10226.2,
+            "predicted_per_token_ms": 26.631,
+            "predicted_per_second": 37.6,
+            "draft_n": 282,
+            "draft_n_accepted": 170
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 10226.2,
+            "decode_tok_s": 37.6,
+            "drafts_offered": 282,
+            "drafts_accepted": 170,
+            "hit_rate": 0.735,
+            "pcie_share": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "label": "k5-ref10",
+      "k": 5,
+      "reference": 10,
+      "complete": true,
+      "quality": [
+        {
+          "name": "multiply",
+          "passed": true
+        },
+        {
+          "name": "remainder",
+          "passed": false
+        },
+        {
+          "name": "logic",
+          "passed": false
+        },
+        {
+          "name": "fraction",
+          "passed": false
+        },
+        {
+          "name": "dedup",
+          "passed": true
+        },
+        {
+          "name": "intervals",
+          "passed": false
+        },
+        {
+          "name": "balanced",
+          "passed": true
+        },
+        {
+          "name": "runs",
+          "passed": true
+        },
+        {
+          "name": "tool_0",
+          "passed": true
+        },
+        {
+          "name": "tool_1",
+          "passed": true
+        },
+        {
+          "name": "chinese_json",
+          "passed": true
+        },
+        {
+          "name": "context_recall",
+          "passed": true
+        }
+      ],
+      "speed": [
+        {
+          "workload": "code",
+          "repeat": 0,
+          "elapsed_s": 9.89100000000326,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 63,
+            "prompt_ms": 1140.2,
+            "prompt_per_token_ms": 18.098,
+            "prompt_per_second": 55.3,
+            "predicted_n": 384,
+            "predicted_ms": 8746.6,
+            "predicted_per_token_ms": 22.778,
+            "predicted_per_second": 43.9,
+            "draft_n": 304,
+            "draft_n_accepted": 242
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 8746.6,
+            "decode_tok_s": 43.9,
+            "drafts_offered": 304,
+            "drafts_accepted": 242,
+            "hit_rate": 0.622,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "code",
+          "repeat": 1,
+          "elapsed_s": 8.15599999999904,
+          "usage": {
+            "prompt_tokens": 63,
+            "completion_tokens": 384,
+            "total_tokens": 447,
+            "prompt_tokens_details": {
+              "cached_tokens": 56
+            }
+          },
+          "timings": {
+            "cache_n": 56,
+            "prompt_n": 7,
+            "prompt_ms": 188.3,
+            "prompt_per_token_ms": 26.9,
+            "prompt_per_second": 37.2,
+            "predicted_n": 384,
+            "predicted_ms": 7954.8,
+            "predicted_per_token_ms": 20.716,
+            "predicted_per_second": 48.3,
+            "draft_n": 316,
+            "draft_n_accepted": 248
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 7954.8,
+            "decode_tok_s": 48.3,
+            "drafts_offered": 316,
+            "drafts_accepted": 248,
+            "hit_rate": 0.683,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 0,
+          "elapsed_s": 11.264999999999418,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "timings": {
+            "cache_n": 0,
+            "prompt_n": 62,
+            "prompt_ms": 1426.3,
+            "prompt_per_token_ms": 23.005,
+            "prompt_per_second": 43.5,
+            "predicted_n": 384,
+            "predicted_ms": 9836.0,
+            "predicted_per_token_ms": 25.615,
+            "predicted_per_second": 39.0,
+            "draft_n": 293,
+            "draft_n_accepted": 197
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 9836.0,
+            "decode_tok_s": 39.0,
+            "drafts_offered": 293,
+            "drafts_accepted": 197,
+            "hit_rate": 0.635,
+            "pcie_share": 0.0
+          }
+        },
+        {
+          "workload": "chinese",
+          "repeat": 1,
+          "elapsed_s": 8.985000000000582,
+          "usage": {
+            "prompt_tokens": 62,
+            "completion_tokens": 384,
+            "total_tokens": 446,
+            "prompt_tokens_details": {
+              "cached_tokens": 55
+            }
+          },
+          "timings": {
+            "cache_n": 55,
+            "prompt_n": 7,
+            "prompt_ms": 181.7,
+            "prompt_per_token_ms": 25.957,
+            "prompt_per_second": 38.5,
+            "predicted_n": 384,
+            "predicted_ms": 8787.4,
+            "predicted_per_token_ms": 22.884,
+            "predicted_per_second": 43.7,
+            "draft_n": 306,
+            "draft_n_accepted": 193
+          },
+          "native": {
+            "output_tokens": 384,
+            "decode_ms": 8787.4,
+            "decode_tok_s": 43.7,
+            "drafts_offered": 306,
+            "drafts_accepted": 193,
+            "hit_rate": 0.742,
+            "pcie_share": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

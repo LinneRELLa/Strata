@@ -84,6 +84,9 @@ public:
     /// The main model's embedding and head, and the verify window's final residuals (T rows, hc*n_embd each).
     bool bind(const WeightTable& wt, const NativeHead* head, const float* window_R, std::string& err,
               const MtpDrafter* shared = nullptr);
+    /// Local idle solo-serve switch: retain draft weights/buffers, discard graphs
+    /// captured at the previous expert width and clear sequence K/V.
+    bool reset_expert_width(std::string& err);
     void set_window_R(const float* window_R) { window_R_ = window_R; }
 
     /// Prompt cells [cell0, cell0 + n): residual rows `R_rows` (device, hc*n_embd each) and `next_tokens` (host,

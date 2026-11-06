@@ -1,0 +1,23 @@
+{
+  "native_switch_ms": [
+    44.228,
+    40.854,
+    43.728,
+    50.189
+  ],
+  "native_switch_median_ms": 43.978,
+  "single_engine_pid": 9728,
+  "cycles": 5,
+  "checks_passed": 20,
+  "gateway_total_seconds": [
+    1.579,
+    4.906,
+    2.781
+  ],
+  "gateway_engine_pid": 1400,
+  "cross_mode_restore_rejected": 400,
+  "same_mode_restore_tokens": 446,
+  "unit_tests": 13,
+  "cache_regression_tests": 21,
+  "gateway_regression_tests": 35
+}

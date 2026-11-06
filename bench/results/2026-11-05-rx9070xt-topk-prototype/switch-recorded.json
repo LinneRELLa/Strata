@@ -1,0 +1,451 @@
+{
+  "started": "2026-11-05T19:09:46.697836+08:00",
+  "status": "passed",
+  "engine_pid": 9728,
+  "runs": [
+    {
+      "k": 10,
+      "switch": {
+        "model": "qwen3.8-flash-next-original-iq3_s",
+        "k": 10,
+        "changed": false,
+        "engine_pid": 9728,
+        "switch_ms": 0
+      },
+      "switch_http_s": 0.0,
+      "checks": [
+        {
+          "name": "arithmetic_and_fresh_state",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_read": 23,
+            "prompt_ms": 2206.1,
+            "decode_ms": 877.2
+          }
+        },
+        {
+          "name": "same_mode_prefix_reuse",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 16
+            }
+          },
+          "metrics": {
+            "reused": 16,
+            "output_tokens": 4,
+            "prompt_read": 7,
+            "prompt_ms": 766.9,
+            "decode_ms": 696.3
+          }
+        },
+        {
+          "name": "tool_call",
+          "usage": {
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 47,
+            "prompt_read": 287,
+            "prompt_ms": 6946.7,
+            "decode_ms": 5187.3
+          }
+        },
+        {
+          "name": "executable_code",
+          "usage": {
+            "prompt_tokens": 42,
+            "completion_tokens": 53,
+            "total_tokens": 95,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 53,
+            "prompt_read": 42,
+            "prompt_ms": 1776.3,
+            "decode_ms": 5687.5
+          }
+        }
+      ]
+    },
+    {
+      "k": 6,
+      "switch": {
+        "model": "qwen3.8-flash-next-original-iq3_s-top6",
+        "k": 6,
+        "reference": 10,
+        "changed": true,
+        "state_cleared": true,
+        "switch_ms": 44.228,
+        "engine_pid": 9728
+      },
+      "switch_http_s": 0.046999999998661224,
+      "checks": [
+        {
+          "name": "arithmetic_and_fresh_state",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_read": 23,
+            "prompt_ms": 660.9,
+            "decode_ms": 193.3
+          }
+        },
+        {
+          "name": "same_mode_prefix_reuse",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 16
+            }
+          },
+          "metrics": {
+            "reused": 16,
+            "output_tokens": 4,
+            "prompt_read": 7,
+            "prompt_ms": 161.5,
+            "decode_ms": 159.9
+          }
+        },
+        {
+          "name": "tool_call",
+          "usage": {
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 47,
+            "prompt_read": 287,
+            "prompt_ms": 6090.9,
+            "decode_ms": 2227.8
+          }
+        },
+        {
+          "name": "executable_code",
+          "usage": {
+            "prompt_tokens": 42,
+            "completion_tokens": 53,
+            "total_tokens": 95,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 53,
+            "prompt_read": 42,
+            "prompt_ms": 1006.0,
+            "decode_ms": 2201.0
+          }
+        }
+      ]
+    },
+    {
+      "k": 10,
+      "switch": {
+        "model": "qwen3.8-flash-next-original-iq3_s",
+        "k": 10,
+        "reference": 10,
+        "changed": true,
+        "state_cleared": true,
+        "switch_ms": 40.854,
+        "engine_pid": 9728
+      },
+      "switch_http_s": 0.046999999998661224,
+      "checks": [
+        {
+          "name": "arithmetic_and_fresh_state",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_read": 23,
+            "prompt_ms": 1250.9,
+            "decode_ms": 345.8
+          }
+        },
+        {
+          "name": "same_mode_prefix_reuse",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 16
+            }
+          },
+          "metrics": {
+            "reused": 16,
+            "output_tokens": 4,
+            "prompt_read": 7,
+            "prompt_ms": 593.6,
+            "decode_ms": 292.2
+          }
+        },
+        {
+          "name": "tool_call",
+          "usage": {
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 47,
+            "prompt_read": 287,
+            "prompt_ms": 6533.0,
+            "decode_ms": 3543.7
+          }
+        },
+        {
+          "name": "executable_code",
+          "usage": {
+            "prompt_tokens": 42,
+            "completion_tokens": 53,
+            "total_tokens": 95,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 53,
+            "prompt_read": 42,
+            "prompt_ms": 2143.5,
+            "decode_ms": 3769.2
+          }
+        }
+      ],
+      "cross_mode_restore_status": 400,
+      "still_healthy_after_restore_rejection": true
+    },
+    {
+      "k": 6,
+      "switch": {
+        "model": "qwen3.8-flash-next-original-iq3_s-top6",
+        "k": 6,
+        "reference": 10,
+        "changed": true,
+        "state_cleared": true,
+        "switch_ms": 43.728,
+        "engine_pid": 9728
+      },
+      "switch_http_s": 0.046999999998661224,
+      "checks": [
+        {
+          "name": "arithmetic_and_fresh_state",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_read": 23,
+            "prompt_ms": 817.3,
+            "decode_ms": 249.6
+          }
+        },
+        {
+          "name": "same_mode_prefix_reuse",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 16
+            }
+          },
+          "metrics": {
+            "reused": 16,
+            "output_tokens": 4,
+            "prompt_read": 7,
+            "prompt_ms": 168.6,
+            "decode_ms": 145.1
+          }
+        },
+        {
+          "name": "tool_call",
+          "usage": {
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 47,
+            "prompt_read": 287,
+            "prompt_ms": 6316.7,
+            "decode_ms": 2377.3
+          }
+        },
+        {
+          "name": "executable_code",
+          "usage": {
+            "prompt_tokens": 42,
+            "completion_tokens": 53,
+            "total_tokens": 95,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 53,
+            "prompt_read": 42,
+            "prompt_ms": 1155.9,
+            "decode_ms": 2157.6
+          }
+        }
+      ],
+      "same_mode_restore": {
+        "id_slot": 0,
+        "n_restored": 446,
+        "n_read": 242968220,
+        "timings": {
+          "restore_ms": 179.0
+        }
+      }
+    },
+    {
+      "k": 10,
+      "switch": {
+        "model": "qwen3.8-flash-next-original-iq3_s",
+        "k": 10,
+        "reference": 10,
+        "changed": true,
+        "state_cleared": true,
+        "switch_ms": 50.189,
+        "engine_pid": 9728
+      },
+      "switch_http_s": 0.046999999998661224,
+      "checks": [
+        {
+          "name": "arithmetic_and_fresh_state",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 4,
+            "prompt_read": 23,
+            "prompt_ms": 1872.3,
+            "decode_ms": 328.0
+          }
+        },
+        {
+          "name": "same_mode_prefix_reuse",
+          "usage": {
+            "prompt_tokens": 23,
+            "completion_tokens": 4,
+            "total_tokens": 27,
+            "prompt_tokens_details": {
+              "cached_tokens": 16
+            }
+          },
+          "metrics": {
+            "reused": 16,
+            "output_tokens": 4,
+            "prompt_read": 7,
+            "prompt_ms": 455.7,
+            "decode_ms": 311.3
+          }
+        },
+        {
+          "name": "tool_call",
+          "usage": {
+            "prompt_tokens": 287,
+            "completion_tokens": 47,
+            "total_tokens": 334,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 47,
+            "prompt_read": 287,
+            "prompt_ms": 6398.6,
+            "decode_ms": 2991.5
+          }
+        },
+        {
+          "name": "executable_code",
+          "usage": {
+            "prompt_tokens": 42,
+            "completion_tokens": 53,
+            "total_tokens": 95,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "metrics": {
+            "reused": 0,
+            "output_tokens": 53,
+            "prompt_read": 42,
+            "prompt_ms": 2832.6,
+            "decode_ms": 3306.1
+          }
+        }
+      ]
+    }
+  ],
+  "source": "projection of saved local integration results; private paths, request ids and model outputs omitted"
+}

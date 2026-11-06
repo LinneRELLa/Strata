@@ -4421,6 +4421,37 @@ int main(int argc, char** argv) {
                              rope_cfg.type == RST::YaRN ? "YaRN" : "--yarn-attn-factor", rope_cfg.mscale());
         }
     }
+    // Local experiment: change dispatched width before any session allocation.
+    // Keeping K in the actual buffer/graph shape removes CPU and GPU expert work,
+    // rather than merely zeroing weights in a ten-expert execution.
+    if (const char* value = std::getenv("STRATA_EXPERIMENT_TOPK")) {
+        const int keep = std::atoi(value);
+        const char* reference = std::getenv("STRATA_TOPK_REFERENCE");
+        const int norm = reference ? std::atoi(reference) : keep;
+        if (g.n_expert != 512 || K != 10 || (keep != 5 && keep != 6 && keep != 8 && keep != 10) ||
+            (norm != keep && norm != 10) || !o.serve) {
+            std::fprintf(stderr, "topk experiment: needs Flash-Next serve, K=5/6/8/10 and reference=K/10\n");
+            return 2;
+        }
+        if (strata::kernels::native_router_enabled()) {
+            std::fprintf(stderr, "topk experiment: use the default HIP generic router, not the optional native router\n");
+            return 2;
+        }
+        K = keep;
+        g.n_expert_used = keep;
+        std::fprintf(stderr, "TOPK EXPERIMENT: dispatch=%d reference=%d; approximate model, separate snapshots required\n",
+                     keep, norm);
+    }
+    const bool hot_topk = [] {
+        const char* value = std::getenv("STRATA_HOT_TOPK");
+        return value && value[0] == '1';
+    }();
+    if (hot_topk && (!o.serve || !native_pack || K != 10 || multi_gpu || o.batch > 0 ||
+                     o.pipeline_windows > 0 || o.peer_device >= 0 ||
+                     !std::getenv("STRATA_EXPERIMENT_TOPK"))) {
+        std::fprintf(stderr, "hot topk: start native solo serve with Top-10 capacity, no pipeline/peer/split\n");
+        return 2;
+    }
     strata::core::NativeEmbed native_embed;
     if (native_pack) {
         if (o.native_preset.empty() || o.spec < 2 || o.keep_canonical ||
@@ -10503,6 +10534,12 @@ int main(int argc, char** argv) {
                     {"keep_canonical", o.keep_canonical}, {"no_fused_gr", o.no_fused_gr},
                     {"no_fast_attn", o.no_fast_attn}, {"no_fused_gdn", o.no_fused_gdn},
                     {"no_fast_select", o.no_fast_select}, {"vision", o.vision}};
+                // Distinguish both arithmetic modes even though weight files
+                // and all runtime allocations are shared by the hot engine.
+                if (std::getenv("STRATA_EXPERIMENT_TOPK")) {
+                    c.switches.emplace_back("local_expert_topk", (int64_t) K);
+                    c.switches.emplace_back("local_topk_reference", 10);
+                }
                 config_fp = strata::core::session_config_fingerprint(c);
             }
             id.model = *model_fp;
@@ -13586,6 +13623,50 @@ int main(int argc, char** argv) {
                 Clock::now() - profile_saved_at >= std::chrono::duration<double>(o.expert_profile_save_min * 60.0))
                 save_profile("periodic");
             if (line == "QUIT") break;
+            // This control line is consumed only between requests, after the
+            // single-slot service FIFO. No model/VRAM/RAM expert reload occurs.
+            if (line.rfind("TOPK ", 0) == 0) {
+                int requested = 0;
+                std::istringstream command(line.substr(5));
+                std::string extra;
+                if (!hot_topk || !(command >> requested) || (command >> extra) ||
+                    (requested != 6 && requested != 10)) {
+                    std::printf("KERR unsupported hot topk command\n");
+                    std::fflush(stdout);
+                    continue;
+                }
+                const auto started = Clock::now();
+                if (K != requested) {
+                    strata::core::conversation_checkpoint_join(nullptr);
+                    strata::core::conversation_park_join();
+                    if (pool_refill.valid()) pool_refill.wait();
+                    if (!ver.wait_commit(err) || (use_mtp && !mtp.idle(err)) ||
+                        cudaDeviceSynchronize() != cudaSuccess ||
+                        !ver.reset_expert_width(requested, err) ||
+                        (use_mtp && !mtp.reset_expert_width(err))) {
+                        std::printf("FATAL hot topk reset failed\n");
+                        std::fflush(stdout);
+                        return 1;
+                    }
+                    K = requested;
+                    g.n_expert_used = requested;
+                    live_ok = false;
+                    live.clear(); live_imgs.clear(); req_imgs.clear(); cur.clear();
+                    checks.clear(); conversations.clear(); kva_floors.clear();
+                    tail_ckpt_len = -1;
+                    nan_flush = nf_prompt_windows = short_read_off_once = false;
+                    config_fp.reset();
+                    strata::core::session_zero(ss, g, nullptr, main_cs);
+                    if (cudaDeviceSynchronize() != cudaSuccess) {
+                        std::printf("FATAL hot topk state clear failed\n"); std::fflush(stdout); return 1;
+                    }
+                }
+                const double ms = std::chrono::duration<double, std::milli>(Clock::now() - started).count();
+                std::fprintf(stderr, "strata hot topk: dispatch=%d reference=10; state cleared, weights/cache retained; %.1f ms\n", requested, ms);
+                std::printf("TOPKED %d %.3f\n", requested, ms);
+                std::fflush(stdout);
+                continue;
+            }
             // the watchdog watches a request from here until this iteration ends, whichever way it ends
             struct BusyScope {
                 BusyScope() {

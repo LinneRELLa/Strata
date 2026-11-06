@@ -58,6 +58,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <stdexcept>
 
 namespace strata::kernels {
 namespace {
@@ -281,7 +282,7 @@ __global__ void __launch_bounds__(64) router_top10_wave_kernel(const float* __re
 // kernel above.
 template <bool FORCE_SERIAL>
 __global__ void router_top10_fast_kernel(const float* __restrict__ logits, int n_tokens, int n_expert, int k,
-                                         int* __restrict__ ids, float* __restrict__ weights) {
+                                         int* __restrict__ ids, float* __restrict__ weights, int reference_k) {
     extern __shared__ unsigned char s_raw[];
     const size_t taken_bytes = ((size_t) n_expert + 15u) & ~(size_t) 15u;
     double* s_ex = (double*) (s_raw + taken_bytes);
@@ -345,7 +346,7 @@ __global__ void router_top10_fast_kernel(const float* __restrict__ logits, int n
     }
     float my_w = 0.0f;
     int my_id = 0, nsel = 0;
-    for (int i = 0; i < k; ++i) {
+    for (int i = 0; i < reference_k; ++i) {
         float bv = -INFINITY;
         int bi = n_expert;   // a sentinel that loses to every real index
 #pragma unroll
@@ -361,9 +362,9 @@ __global__ void router_top10_fast_kernel(const float* __restrict__ logits, int n
         if (lane == i) { my_w = bv; my_id = bi; }
         nsel = i + 1;
     }
-    if (nsel == k) {
+    if (nsel == reference_k) {
         double s = 0.0;
-        for (int i = 0; i < k; ++i) s += (double) __shfl_sync(0xffffffffu, my_w, i);
+        for (int i = 0; i < reference_k; ++i) s += (double) __shfl_sync(0xffffffffu, my_w, i);
         const double sc = fmax(s, 6.103515625e-05);       // 2**-14
         if (lane < k) {
             ids[(size_t) t * k + lane] = my_id;
@@ -384,18 +385,30 @@ __global__ void router_top10_fast_kernel(const float* __restrict__ logits, int n
 
 void launch_generic(const float* logits, int n_tokens, int n_expert, int k, int* ids, float* weights, void* stream,
                     int mode) {   // mode 0: router_top10_kernel, 1: the HIP fast kernel, 2: the fast kernel's serial path
+    // Reference-set normalization: select reference_k probabilities, emit only
+    // k entries. With no experiment the original operands and sum order remain.
+    static const int experimental_reference = [] {
+        if (!std::getenv("STRATA_EXPERIMENT_TOPK")) return 0;
+        const char* value = std::getenv("STRATA_TOPK_REFERENCE");
+        return value ? std::atoi(value) : 0;
+    }();
+    const int reference_k = experimental_reference > 0 ? experimental_reference : k;
+    if (reference_k < k || reference_k > 32)
+        throw std::invalid_argument("topk reference must be between dispatched K and 32");
+    if (mode == 0 && reference_k != k)
+        throw std::invalid_argument("reference-set experiment requires the HIP fast router");
     int threads = n_expert < RT_MAX_THREADS ? n_expert : RT_MAX_THREADS;
     threads = (threads + 31) & ~31;
     const size_t taken_bytes = ((size_t) n_expert + 15u) & ~(size_t) 15u;
     const size_t smem = taken_bytes + (size_t) n_expert * sizeof(double) + (size_t) n_expert * sizeof(float);
     if (mode == 1) {
         router_top10_fast_kernel<false><<<(unsigned) n_tokens, threads, smem, (cudaStream_t) stream>>>(
-            logits, n_tokens, n_expert, k, ids, weights);
+            logits, n_tokens, n_expert, k, ids, weights, reference_k);
         return;
     }
     if (mode == 2) {
         router_top10_fast_kernel<true><<<(unsigned) n_tokens, threads, smem, (cudaStream_t) stream>>>(
-            logits, n_tokens, n_expert, k, ids, weights);
+            logits, n_tokens, n_expert, k, ids, weights, reference_k);
         return;
     }
     router_top10_kernel<<<(unsigned) n_tokens, threads, smem, (cudaStream_t) stream>>>(
